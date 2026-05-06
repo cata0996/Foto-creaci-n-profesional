@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Foto CV con IA - Cata Mora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FAF7F2; --cream-dark: #F0EBE1; --ink: #1A1714;
+            --ink-soft: #4A4540; --accent: #C4622D; --border: #DDD8D0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--cream); color: var(--ink); font-family: 'DM Sans', sans-serif; line-height: 1.6; display: none; } /* Oculto hasta validar pass */
+        header { background: var(--ink); color: var(--cream); padding: 50px 20px; text-align: center; }
+        h1 { font-family: 'DM Serif Display', serif; font-size: 2.2rem; }
+        h1 em { color: var(--accent); font-style: italic; }
+        .lang-nav { background: var(--cream-dark); padding: 15px; display: flex; justify-content: center; gap: 10px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
+        .btn-lang { padding: 8px 16px; border: 1px solid var(--border); background: white; cursor: pointer; border-radius: 20px; font-weight: 500; }
+        .btn-lang.active { background: var(--accent); color: white; border-color: var(--accent); }
+        .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .step { position: relative; padding-left: 60px; margin-bottom: 40px; }
+        .step::before { content: ""; position: absolute; left: 24px; top: 40px; bottom: -40px; width: 2px; background: var(--border); }
+        .step:last-child::before { display: none; }
+        .step-num { position: absolute; left: 0; top: 0; width: 48px; height: 48px; background: var(--ink); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .card { background: white; padding: 25px; border-radius: 15px; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .card h2 { font-family: 'DM Serif Display', serif; margin-bottom: 10px; font-size: 1.3rem; color: var(--accent); }
+        .flow-link { display: inline-block; margin-top: 15px; padding: 10px 18px; background: var(--ink); color: white; text-decoration: none; border-radius: 8px; font-size: 14px; font-weight: bold; }
+        .pint-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 15px; }
+        .pint-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); }
+        .note { background: #fff8e1; border-left: 5px solid #ffb300; padding: 20px; margin-top: 40px; border-radius: 8px; font-size: 0.9rem; }
+        footer { text-align: center; padding: 40px; font-family: 'DM Serif Display', serif; font-size: 1.8rem; border-top: 1px solid var(--border); color: var(--ink-soft); }
+    </style>
+</head>
+<body>
+
+<script>
+    // --- PROTECCIÓN POR CONTRASEÑA ---
+    const PASS_SISTEMA = "FotoCV2024"; // <--- CAMBIA TU CLAVE AQUÍ
+
+    function validar() {
+        if (sessionStorage.getItem("auth") === "true") {
+            document.body.style.display = "block";
+            return;
+        }
+        let p = prompt("🔐 Ingresa tu clave de acceso:");
+        if (p === PASS_SISTEMA) {
+            sessionStorage.setItem("auth", "true");
+            document.body.style.display = "block";
+        } else {
+            alert("Clave incorrecta.");
+            window.location.reload();
+        }
+    }
+    validar();
+</script>
+
+<header>
+    <h1 id="main-title">Crea tu foto de CV <em>desde cero con IA</em></h1>
+</header>
+
+<div class="lang-nav">
+    <button class="btn-lang active" onclick="changeLang('es', this)">Español</button>
+    <button class="btn-lang" onclick="changeLang('en', this)">English</button>
+    <button class="btn-lang" onclick="changeLang('pt', this)">Português</button>
+</div>
+
+<div class="container">
+    <div id="steps-content"></div>
+    <div class="note" id="final-note"></div>
+</div>
+
+<footer>Cata Mora</footer>
+
+<script>
+    const contentData = {
+        es: {
+            title: "Crea tu foto de CV <em>desde cero con IA</em>",
+            note: "<strong>Nota:</strong> Si encuentras diferencias muy grandes, revisa el prompt y ajustalo. Esto es el proceso de UNA sola imagen, si quieres generar diferentes imagenes debes repetir el proceso.",
+            steps: [
+                "Toma dos fotos (tuyas) una seria/o y otra sonriendo. Que tenga buena luz (obligatorio), puede ser con o sin maquillaje.",
+                "Busca una referencia de foto en Pinterest de lo que quieres para tu cv.",
+                "Ve a ChatGPT o Claude y pidele a la IA el prompt maestro hiper-realista de la imagen descargada de Pinterest, este prompt DEBE ser en inglés.",
+                "Ve a la herramienta Flow de Gemini y crea un nuevo proyecto.",
+                "Carga/sube las dos fotos que te tomaste.",
+                "Inserta el prompt maestro que te dio la IA.",
+                "Agrega la descripción de tus características a dicho prompt (piel, cabello, etc). <br><br><strong>Consejo:</strong> si no sabes inglés, traduce el prompt y revisa los detalles para que coincidan.",
+                "Elige el tamaño que quieres para la foto (recomendado para cv 3:4 o 1:1)",
+                "Dale clic en Generar y espera a ver los resultados."
+            ]
+        },
+        en: {
+            title: "Create your CV photo <em>from scratch with AI</em>",
+            note: "<strong>Note:</strong> If you find major differences, review and adjust the prompt. One image at a time.",
+            steps: [
+                "Take two photos of yourself: one serious and one smiling. Good lighting is mandatory.",
+                "Look for a photo reference on Pinterest for the style you want.",
+                "Go to ChatGPT or Claude and ask for a hyper-realistic master prompt in English.",
+                "Go to the Gemini Flow tool and create a new project.",
+                "Upload the two photos you took.",
+                "Insert the master prompt provided by the AI.",
+                "Add your physical characteristics (skin, hair, etc.) to the prompt. <br><br><strong>Tip:</strong> If you don't know English, translate and check details.",
+                "Choose the size (recommended 3:4 or 1:1).",
+                "Click Generate and wait for results."
+            ]
+        },
+        pt: {
+            title: "Crie sua foto de CV <em>do zero com IA</em>",
+            note: "<strong>Nota:</strong> Se encontrar grandes diferenças, revise o prompt. Processo de uma imagem por vez.",
+            steps: [
+                "Tire duas fotos suas: uma séria e outra sorrindo. Boa iluminação é obrigatória.",
+                "Procure uma referência no Pinterest para o estilo que você deseja.",
+                "Vá ao ChatGPT ou Claude e peça o prompt mestre em inglês.",
+                "Vá para a ferramenta Flow do Gemini e crie um novo projeto.",
+                "Carregue as duas fotos que você tirou.",
+                "Insira o prompt mestre fornecido pela IA.",
+                "Adicione suas características físicas ao prompt. <br><br><strong>Dica:</strong> Se não souber inglês, traduza para garantir os detalhes.",
+                "Escolha o tamanho (recomendado 3:4 ou 1:1).",
+                "Clique em Gerar e aguarde os resultados."
+            ]
+        }
+    };
+
+    function changeLang(lang, btn) {
+        document.querySelectorAll('.btn-lang').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const data = contentData[lang];
+        document.getElementById('main-title').innerHTML = data.title;
+        document.getElementById('final-note').innerHTML = data.note;
+        const container = document.getElementById('steps-content');
+        container.innerHTML = data.steps.map((text, i) => {
+            let extra = "";
+            if (i === 1) { 
+                extra = `<div class="pint-grid">
+                    <img src="2f60f2c75f607e6a1b6b2beff4bcf565.jpg" class="pint-img">
+                    <img src="fc99b21e7f98f2af399861b612f53356.jpg" class="pint-img">
+                    <img src="8717979dea8f27b7542d1915d82abb15.jpg" class="pint-img">
+                    <img src="775f7cfa959175fdfe31b543dd29f1d7.jpg" class="pint-img">
+                </div>`;
+            }
+            if (i === 3) {
+                extra = `<a href="https://labs.google/fx/es-419/tools/flow" target="_blank" class="flow-link">Abrir Google Flow ↗</a>`;
+            }
+            return `<div class="step"><div class="step-num">${i + 1}</div><div class="card"><h2>Paso ${i + 1}</h2><p>${text}</p>${extra}</div></div>`;
+        }).join('');
+    }
+    changeLang('es', document.querySelector('.btn-lang'));
+</script>
+</body>
+</html>
